@@ -4,17 +4,17 @@ using System.Linq;
 
 namespace Calculator
 {
-    internal interface IOperationsProvider
+    internal interface IOperationRunner
     {
         IReadOnlyList<string> GetAllOperationNames();
         double Calculate(int operationIndex, double lhs, double rhs);
     }
 
-    internal class OperationsProvider : IOperationsProvider
+    internal class OperationRunner : IOperationRunner
     {
         private readonly IReadOnlyList<ICalculatingOperation> _operations;
 
-        public OperationsProvider(IEnumerable<ICalculatingOperation> operations)
+        public OperationRunner(IEnumerable<ICalculatingOperation> operations)
         {
             _operations = operations?.ToArray() ?? throw new ArgumentNullException(nameof(operations));
         }

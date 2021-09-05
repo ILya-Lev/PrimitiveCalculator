@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Calculator
+﻿namespace Calculator
 {
     internal interface ICalculatingOperation
     {
@@ -34,8 +32,8 @@ namespace Calculator
 
     //internal class Root : ICalculatingOperation
     //{
-    //    public double Calculate(double number, double power) => power == 0.0 
-    //        ? double.NaN 
+    //    public double Calculate(double number, double power) => power == 0.0
+    //        ? double.NaN
     //        : Math.Pow(number, 1 / power);
     //}
 }

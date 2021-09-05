@@ -1,11 +1,8 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Text.Json.Serialization;
 using Microsoft.Extensions.Options;
-using Newtonsoft.Json;
+using System;
 
 namespace Calculator
 {
@@ -51,7 +48,7 @@ namespace Calculator
             serviceCollection.Configure<DisplayOptions>(configuration.GetSection(nameof(DisplayOptions)));
 
             serviceCollection.TryAddScoped<IMenu, Menu>();
-            serviceCollection.TryAddSingleton<IOperationsProvider, OperationsProvider>();
+            serviceCollection.TryAddSingleton<IOperationRunner, OperationRunner>();
             serviceCollection.TryAddSingleton<PrimitiveCalculator>();
 
             //serviceCollection.TryAddEnumerable(new[]
@@ -75,7 +72,7 @@ namespace Calculator
             return serviceCollection.BuildServiceProvider();
             #endregion
         }
-        
+
         /// <summary> Pure DI composition root </summary>
         private static PrimitiveCalculator CreatePrimitiveCalculator_Pure()
         {
@@ -93,14 +90,14 @@ namespace Calculator
                 new Multiply(),
                 new Divide()
             };
-            IOperationsProvider operationsProvider = new OperationsProvider(operations);
+            IOperationRunner operationRunner = new OperationRunner(operations);
 
             DisplayOptions displayOptions = new();
             configuration.Bind(nameof(DisplayOptions), displayOptions);
             var displaySettings = Options.Create(displayOptions);
-            
-            var calculator = new PrimitiveCalculator(menu, operationsProvider, displaySettings);
-            
+
+            var calculator = new PrimitiveCalculator(menu, operationRunner, displaySettings);
+
             return calculator;
         }
     }
