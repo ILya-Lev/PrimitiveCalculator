@@ -22,11 +22,11 @@ namespace Calculator
         public void Run()
         {
             var operationNames = _operationsProvider.GetAllOperationNames();
+            
             var operationIndex = _menu.SelectOneOperationIndex(operationNames);
-            var operation = _operationsProvider.GetOperation(operationIndex);
             var (lhs, rhs) = _menu.GetOperands();
 
-            var result = operation.Calculate(lhs, rhs);
+            var result = _operationsProvider.Calculate(operationIndex, lhs, rhs);
             var roundedResult = Math.Round(result, _config.Value.DecimalDigits);
 
             _menu.DisplayResult(roundedResult);

@@ -7,7 +7,7 @@ namespace Calculator
     internal interface IOperationsProvider
     {
         IReadOnlyList<string> GetAllOperationNames();
-        ICalculatingOperation GetOperation(int index);
+        double Calculate(int operationIndex, double lhs, double rhs);
     }
 
     internal class OperationsProvider : IOperationsProvider
@@ -23,6 +23,10 @@ namespace Calculator
             .Select(op => op.GetType().Name)
             .ToArray();
 
-        public ICalculatingOperation GetOperation(int index) => _operations[index];
+        public double Calculate(int operationIndex, double lhs, double rhs) => 
+            GetOperation(operationIndex)
+                .Calculate(lhs, rhs);
+
+        private ICalculatingOperation GetOperation(int index) => _operations[index];
     }
 }
